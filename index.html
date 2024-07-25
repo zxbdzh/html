@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>vue实现表格的增删改查</title>
+		<link rel="stylesheet" href="css/index.css">
+		<script src="js/vue.js"></script>
+		<script src="js/index.js"></script>
+	</head>
+
+	<body>
+		<div id="table">
+			<div class="add">
+				<input type="text" placeholder="标题" v-model="obj.title"/>
+				<input type="text" placeholder="发布人"  v-model="obj.user"/>
+				<input type="date" placeholder="发布时间"  v-model="obj.date"/>
+				<button @click="add()" :disabled="!obj.title || !obj.user || !obj.date">新增</button>
+			</div>
+			<table cellpadding="0" cellspacing="0">
+				<thead>
+					<tr>
+						<th>序号</th>
+						<th>标题</th>
+						<th>发布人</th>
+						<th>发布时间</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr v-for="(list,index) in lists">
+						<td>{{list.id}}</td>
+						<td>{{list.title}}</td>
+						<td>{{list.user}}</td>
+						<td>{{list.date}}</td>
+						<td>
+							<span class="delete" @click="del(list,index)">删除</span>
+							<span class="edit" @click="edit(list)">编辑</span>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+
+			<div id="layer" v-show="flag">
+				<div class="mask">
+					<div class="title">
+						编辑
+						<span @click="flag=false">x</span>
+					</div>
+					<div class="content">
+						<input type="text"  placeholder="标题"  v-model = "editObj.title"/>
+						<input type="text" placeholder="发布人"  v-model = "editObj.user"/>
+						<input type="date" placeholder="发布时间"  v-model = "editObj.date"/>
+						<button @click="update()">更新</button>
+						<button @click="flag=false">取消</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+
+</html>
